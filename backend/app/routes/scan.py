@@ -1,9 +1,9 @@
+import socket
 from flask import Blueprint, request, jsonify
 from app.scanner import (
     ping_host, traceroute_host, syn_scan,
     udp_scan, banner_grab
 )
-import socket
 from scapy.all import IP, TCP, sr1
 
 scan_bp = Blueprint("scan", __name__)

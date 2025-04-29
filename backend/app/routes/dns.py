@@ -1,6 +1,6 @@
+import whois
 from flask import Blueprint, request, jsonify
 from scapy.all import IP, UDP, DNS, DNSQR, sr1
-import whois
 
 dns_bp = Blueprint("dns", __name__)
 
