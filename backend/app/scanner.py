@@ -1,6 +1,6 @@
-from scapy.all import IP, ICMP, TCP, UDP, sr1, conf
 import socket
 import time
+from scapy.all import IP, ICMP, TCP, UDP, sr1, conf
 
 
 def ping_host(ip):
