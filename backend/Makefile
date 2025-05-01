@@ -2,6 +2,7 @@
 
 VENV_NAME=venv
 
+# venv commands
 venv:
 	python3 -m venv $(VENV_NAME)
 
@@ -16,3 +17,31 @@ run:
 
 clean:
 	rm -rf $(VENV_NAME)
+
+# Alembic migration commands
+alembic-init:
+	alembic init migrations
+
+alembic-revision:
+	alembic revision --autogenerate -m "$(msg)"
+
+alembic-upgrade:
+	alembic upgrade head
+
+alembic-downgrade:
+	alembic downgrade -1
+
+alembic-current:
+	alembic current
+
+alembic-history:
+	alembic history --verbose
+
+alembic-show:
+	alembic show $(rev)
+
+alembic-merge:
+	alembic merge -m "$(msg)" $(revisions)
+
+alembic-heads:
+	alembic heads
