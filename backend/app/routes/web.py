@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 from datetime import datetime
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-web_bp = Blueprint("web", __name__)
+web_bp = Blueprint("web", __name__, url_prefix="/web")
 
 
 @web_bp.route("/httpcheck")
@@ -28,7 +28,7 @@ def http_check():
     if not url:
         return jsonify({"error": "Missing 'url' parameter"}), 400
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
 
     try:
         response = requests.get(url, timeout=timeout, allow_redirects=True)
@@ -65,7 +65,7 @@ def ssl_check():
     if not url:
         return jsonify({"error": "Missing 'url' parameter"}), 400
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
 
     try:
         parsed = urlparse(url if url.startswith("https") else "https://" + url)
