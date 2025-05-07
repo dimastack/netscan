@@ -5,7 +5,7 @@ from app.utils.net import resolve_hostname
 from app.db import db_session
 from app.models import ScanResult
 
-resolve_bp = Blueprint("resolve", __name__, url_prefix="/utils")
+resolve_bp = Blueprint("resolve", __name__)
 
 
 @resolve_bp.route("/resolve")

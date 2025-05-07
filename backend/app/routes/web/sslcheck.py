@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 from datetime import datetime
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-sslcheck_bp = Blueprint("sslcheck", __name__, url_prefix="/web")
+sslcheck_bp = Blueprint("sslcheck", __name__)
 
 
 @sslcheck_bp.route("/sslcheck")

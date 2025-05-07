@@ -5,7 +5,7 @@ from app.utils.net import get_http_headers
 from app.db import db_session
 from app.models import ScanResult
 
-headers_bp = Blueprint("headers", __name__, url_prefix="/utils")
+headers_bp = Blueprint("headers", __name__)
 
 
 @headers_bp.route("/headers")

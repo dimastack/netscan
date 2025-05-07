@@ -6,7 +6,7 @@ from app.db import db_session
 from app.models.scan_results import ScanResult
 
 
-osfingerprint_bp = Blueprint("osfingerprint", __name__, url_prefix="/scan")
+osfingerprint_bp = Blueprint("osfingerprint", __name__)
 
 
 @osfingerprint_bp.route("/osfingerprint")

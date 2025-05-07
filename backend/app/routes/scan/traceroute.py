@@ -5,7 +5,7 @@ from app.db import db_session
 from app.models.scan_results import ScanResult
 from app.scanner import traceroute_host
 
-traceroute_bp = Blueprint("trace", __name__, url_prefix="/scan")
+traceroute_bp = Blueprint("trace", __name__)
 
 @traceroute_bp.route("/trace")
 @jwt_required()

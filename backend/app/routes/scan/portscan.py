@@ -6,7 +6,7 @@ from app.db import db_session
 from app.models.scan_results import ScanResult
 from app.scanner import syn_scan, udp_scan
 
-portscan_bp = Blueprint("portscan", __name__, url_prefix="/scan")
+portscan_bp = Blueprint("portscan", __name__)
 
 @portscan_bp.route("/synscan")
 @jwt_required()

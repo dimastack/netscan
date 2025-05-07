@@ -5,7 +5,7 @@ from app.utils.net import reverse_dns
 from app.db import db_session
 from app.models import ScanResult
 
-reverse_bp = Blueprint("reverse", __name__, url_prefix="/utils")
+reverse_bp = Blueprint("reverse", __name__)
 
 
 @reverse_bp.route("/reverse")

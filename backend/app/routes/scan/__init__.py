@@ -6,7 +6,7 @@ from .osfingerprint import osfingerprint_bp
 from .portscan import portscan_bp
 from .banner import banner_bp
 
-scan_bp = Blueprint("scan", __name__)
+scan_bp = Blueprint("scan", __name__, url_prefix="/scan")
 
 # Register each sub-blueprint under the "scan" parent
 scan_bp.register_blueprint(ping_bp)

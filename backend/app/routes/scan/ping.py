@@ -5,7 +5,7 @@ from app.db import db_session
 from app.models.scan_results import ScanResult
 from app.scanner import ping_host
 
-ping_bp = Blueprint("ping", __name__, url_prefix="/scan")
+ping_bp = Blueprint("ping", __name__)
 
 @ping_bp.route("/ping")
 @jwt_required()

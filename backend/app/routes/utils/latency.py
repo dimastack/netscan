@@ -5,7 +5,7 @@ from app.utils.net import check_latency
 from app.db import db_session
 from app.models import ScanResult
 
-latency_bp = Blueprint("latency", __name__, url_prefix="/utils")
+latency_bp = Blueprint("latency", __name__)
 
 
 @latency_bp.route("/latency")

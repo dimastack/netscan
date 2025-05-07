@@ -5,7 +5,7 @@ from app.db import db_session
 from app.models.scan_results import ScanResult
 from app.scanner import banner_grab
 
-banner_bp = Blueprint("banner", __name__, url_prefix="/scan")
+banner_bp = Blueprint("banner", __name__)
 
 
 @banner_bp.route("/bannergrab")

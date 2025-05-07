@@ -3,7 +3,7 @@ import requests
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-httpcheck_bp = Blueprint("httpcheck", __name__, url_prefix="/web")
+httpcheck_bp = Blueprint("httpcheck", __name__)
 
 
 @httpcheck_bp.route("/httpcheck")
