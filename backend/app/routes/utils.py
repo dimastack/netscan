@@ -5,7 +5,7 @@ from app.utils.net import resolve_hostname, reverse_dns, check_latency, get_http
 from app.db import db_session
 from app.models import ScanResult
 
-utils_bp = Blueprint("utils", __name__)
+utils_bp = Blueprint("utils", __name__, url_prefix="/utils")
 
 
 @utils_bp.route("/resolve")
@@ -21,7 +21,7 @@ def resolve():
         JSON response with resolved IP addresses or an error message.
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     host = request.args.get("host")
     if not host:
         return jsonify({"error": "Missing 'host' parameter"}), 400
@@ -52,7 +52,7 @@ def reverse():
         JSON response with the hostname or error message.
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     if not ip:
         return jsonify({"error": "Missing 'ip' parameter"}), 400
@@ -84,7 +84,7 @@ def latency():
         JSON with round-trip time in milliseconds, or an error.
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     host = request.args.get("host")
     port = request.args.get("port", default=80, type=int)
     if not host:
@@ -116,7 +116,7 @@ def headers():
         JSON object with HTTP headers or an error message.
     """
     
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     url = request.args.get("url")
     if not url:
         return jsonify({"error": "Missing 'url' parameter"}), 400

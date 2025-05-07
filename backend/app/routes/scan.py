@@ -10,7 +10,7 @@ from app.scanner import (
     udp_scan, banner_grab
 )
 
-scan_bp = Blueprint("scan", __name__)
+scan_bp = Blueprint("scan", __name__, url_prefix="/scan")
 
 @scan_bp.route("/ping")
 @jwt_required()
@@ -25,7 +25,7 @@ def ping():
         JSON with ICMP ping result.
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     if not ip:
         return jsonify({"error": "Missing 'ip'"}), 400
@@ -57,7 +57,7 @@ def trace():
         JSON with list of hops to the destination.
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     if not ip:
         return jsonify({"error": "Missing 'ip'"}), 400
@@ -90,7 +90,7 @@ def synscan():
         JSON with scan results showing open ports.
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     ports = request.args.get("ports", "22,80,443")
     port_list = [int(p.strip()) for p in ports.split(",") if p.strip().isdigit()]
@@ -123,7 +123,7 @@ def tcp_connect():
         JSON with connection status and response time (RTT).
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     port = request.args.get("port", type=int)
 
@@ -189,7 +189,7 @@ def udp():
         JSON with scan result for the given UDP port.
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     port = request.args.get("port", type=int)
     if not ip or port is None:
@@ -223,7 +223,7 @@ def portscan():
         JSON with scan results showing open ports within the range.
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     port_range = request.args.get("range", "1-1024")
 
@@ -260,7 +260,7 @@ def osfingerprint():
         JSON with guessed OS, TTL, and packet size.
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     if not ip:
         return jsonify({"error": "Missing 'ip'"}), 400
@@ -315,7 +315,7 @@ def bannergrab():
         JSON with banner string or error details.
     """
     
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     port = request.args.get("port", type=int)
     if not ip or port is None:

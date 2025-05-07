@@ -6,7 +6,7 @@ from scapy.all import IP, UDP, DNS, DNSQR, sr1
 from app.db import db_session
 from app.models.scan_result import ScanResult
 
-dns_bp = Blueprint("dns", __name__)
+dns_bp = Blueprint("dns", __name__, url_prefix="/dns")
 
 @dns_bp.route("/lookup")
 @jwt_required()
@@ -25,7 +25,7 @@ def lookup():
     """
 
     # Get user_id from JWT token
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
 
     domain = request.args.get("domain")
     record_type = request.args.get("type", default="A").upper()
@@ -86,7 +86,7 @@ def reverse():
         JSON with the resolved hostname or 'not found' if unavailable.
     """
     
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
 
     ip = request.args.get("ip")
     dst = request.args.get("dst", default="8.8.8.8")
@@ -132,7 +132,7 @@ def whois_lookup():
         JSON with WHOIS data such as registrar, creation/expiration dates, name servers, and contact email.
     """
 
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
 
     domain = request.args.get("domain")
     if not domain:
