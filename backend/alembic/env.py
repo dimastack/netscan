@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Import your models and Base
-from app.config import Config
+from app.core.config import Config
 from app.models import Base  # <-- this imports all via __init__.py
 
 # Load Alembic .ini

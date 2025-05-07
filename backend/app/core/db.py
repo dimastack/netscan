@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.config import Config
+from app.core.config import Config
 from app.models.base import Base  # use the shared Base
 
 # Set up engine and session using DATABASE_URL from Config

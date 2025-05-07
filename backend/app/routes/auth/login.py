@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token
 from werkzeug.security import check_password_hash
 
-from app.db import db_session
+from app.core.db import db_session
 from app.models.user_model import User
 
 login_bp = Blueprint("login", __name__)
@@ -20,7 +20,7 @@ def login():
         JSON with the JWT access token if the credentials are valid.
         If the credentials are invalid, returns an error message.
     """
-    
+
     data = request.get_json()
     email = data.get("email")
     password = data.get("password")

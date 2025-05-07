@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.utils.net import resolve_hostname
-from app.db import db_session
+from app.services.network import resolve_hostname
+from app.core.db import db_session
 from app.models import ScanResult
 
 resolve_bp = Blueprint("resolve", __name__)

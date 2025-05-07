@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
-from app.config import DevelopmentConfig, ProductionConfig
+
+from app.core.config import DevelopmentConfig, ProductionConfig
 from app.routes.api import api_v1  # The versioned API blueprint with all sub-blueprints
 
 config_mapping = {

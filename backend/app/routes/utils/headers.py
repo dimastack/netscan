@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.utils.net import get_http_headers
-from app.db import db_session
+from app.services.network import get_http_headers
+from app.core.db import db_session
 from app.models import ScanResult
 
 headers_bp = Blueprint("headers", __name__)

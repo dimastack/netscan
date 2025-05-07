@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from scapy.all import IP, UDP, DNS, DNSQR, sr1
 
-from app.db import db_session
+from app.core.db import db_session
 from app.models.scan_results import ScanResult
 
 lookup_bp = Blueprint("lookup", __name__)

@@ -2,9 +2,9 @@ import socket
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.db import db_session
+from app.core.db import db_session
 from app.models.scan_results import ScanResult
-from app.scanner import syn_scan, udp_scan
+from app.services.scanner import syn_scan, udp_scan
 
 portscan_bp = Blueprint("portscan", __name__)
 

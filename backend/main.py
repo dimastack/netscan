@@ -1,6 +1,6 @@
 import os
 from app import create_app
-from app.config import Config
+from app.core.config import Config
 
 # Read from env var or fallback to development
 config_name = os.environ.get("FLASK_ENV", "development")
