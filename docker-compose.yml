@@ -17,8 +17,15 @@ services:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    # cap_add are added to support raw socket operations for scrapy ping via ICMP
+    # If you're on macOS or Windows, and using Docker Desktop, ICMP won’t reliably
+    # work inside containers — even with cap_add.
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    # On OSX 5000 port is busy by default by ControlCenter.app, so I use 5001 for port forwarding
     ports:
-      - "5000:5000"
+      - "5001:5000"
     depends_on:
       - db
     volumes:

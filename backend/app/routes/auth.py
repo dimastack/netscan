@@ -73,7 +73,7 @@ def login():
         if not user or not check_password_hash(user.password_hash, password):
             return jsonify({"error": "Invalid credentials"}), 401
 
-        token = create_access_token(identity=user.id)
+        token = create_access_token(identity=str(user.id))
         return jsonify({"access_token": token})
 
 
@@ -89,6 +89,6 @@ def me():
     Returns:
         JSON with the authenticated user's ID.
     """
-    
-    user_id = get_jwt_identity()
+
+    user_id = int(get_jwt_identity())
     return jsonify({"user_id": user_id})
