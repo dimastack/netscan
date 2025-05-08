@@ -13,7 +13,7 @@ freeze:
 	source $(VENV_NAME)/bin/activate && pip freeze > requirements.txt
 
 run:
-	source $(VENV_NAME)/bin/activate && python app/main.py
+	source $(VENV_NAME)/bin/activate && python netscan_app/main.py
 
 clean:
 	rm -rf $(VENV_NAME)

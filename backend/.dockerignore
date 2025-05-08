@@ -1,0 +1,14 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+*.db
+*.egg-info/
+.env
+pytest_cache/
+.mypy_cache/
+.coverage
+*.DS_Store
