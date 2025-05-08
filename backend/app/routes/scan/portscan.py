@@ -1,4 +1,6 @@
 import socket
+import time
+
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
@@ -63,48 +65,39 @@ def tcp_connect():
         return jsonify({"error": "Missing 'ip' or 'port'"}), 400
 
     try:
-        start = socket.time.time()
+        start = time.time()
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(2)
         sock.connect((ip, port))
         sock.close()
-        end = socket.time.time()
+        end = time.time()
 
         result = {
             "ip": ip,
             "port": port,
             "status": "open",
-            "rtt_ms": round((end - start) * 1000, 2)
+            "rtt_ms": round((end - start) * 1000, 2),
+            "error": None
         }
-
-        with db_session() as session:
-            result_data = ScanResult(
-                user_id=user_id,
-                scan_type="tcpconnect",
-                target=f"{ip}:{port}",
-                result=str(result)
-            )
-            session.add(result_data)
-
-        return jsonify(result)
-
     except Exception as e:
         result = {
             "ip": ip,
             "port": port,
             "status": "closed",
-            "error": str(e)
+            "error": str(e),
+            "rtt_ms": None
         }
-        with db_session() as session:
-            result_data = ScanResult(
-                user_id=user_id,
-                scan_type="tcpconnect",
-                target=f"{ip}:{port}",
-                result=str(result)
-            )
-            session.add(result_data)
 
-        return jsonify(result)
+    with db_session() as session:
+        result_data = ScanResult(
+            user_id=user_id,
+            scan_type="tcpconnect",
+            target=f"{ip}:{port}",
+            result=str(result)
+        )
+        session.add(result_data)
+
+    return jsonify(result)
 
 
 @portscan_bp.route("/udp")

@@ -3,7 +3,7 @@ from flask_jwt_extended import create_access_token
 from werkzeug.security import check_password_hash
 
 from app.core.db import db_session
-from app.models.user_model import User
+from app.models.user import User
 
 login_bp = Blueprint("login", __name__)
 

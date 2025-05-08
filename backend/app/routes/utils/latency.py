@@ -1,7 +1,9 @@
+import socket
+import time
+
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.services.network import check_latency
 from app.core.db import db_session
 from app.models import ScanResult
 
@@ -28,7 +30,26 @@ def latency():
     if not host:
         return jsonify({"error": "Missing 'host' parameter"}), 400
 
-    result = check_latency(host, port)
+    try:
+        start = time.time()
+        sock = socket.create_connection((host, port), timeout=2)
+        end = time.time()
+        sock.close()
+        result = {
+            "host": host,
+            "port": port,
+            "status": "online",
+            "latency_ms": round((end - start) * 1000, 2),
+            "error": None
+        }
+    except Exception as e:
+        result = {
+            "host": host,
+            "port": port,
+            "status": "offline",
+            "latency_ms": None,
+            "error": str(e)
+        }
 
     with db_session() as session:
         session.add(ScanResult(

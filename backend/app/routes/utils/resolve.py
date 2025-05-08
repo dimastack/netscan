@@ -1,7 +1,8 @@
+import socket
+
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.services.network import resolve_hostname
 from app.core.db import db_session
 from app.models import ScanResult
 
@@ -26,7 +27,19 @@ def resolve():
     if not host:
         return jsonify({"error": "Missing 'host' parameter"}), 400
 
-    result = resolve_hostname(host)
+    try:
+        ip = socket.gethostbyname(host)
+        result = {
+            "hostname": host, 
+            "ip": ip,
+            "error": None
+        }
+    except Exception as e:
+        result = {
+            "hostname": host, 
+            "ip": None,
+            "error": str(e)
+        }
 
     with db_session() as session:
         session.add(ScanResult(

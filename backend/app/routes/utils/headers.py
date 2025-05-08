@@ -1,7 +1,8 @@
+import requests
+
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-from app.services.network import get_http_headers
 from app.core.db import db_session
 from app.models import ScanResult
 
@@ -26,7 +27,21 @@ def headers():
     if not url:
         return jsonify({"error": "Missing 'url' parameter"}), 400
 
-    result = get_http_headers(url)
+    try:
+        resp = requests.head(url, timeout=3)
+        result = {
+            "url": url,
+            "status_code": resp.status_code,
+            "headers": dict(resp.headers),
+            "error": None
+        }
+    except Exception as e:
+        result = {
+            "url": url,
+            "status_code": None,
+            "headers": None,
+            "error": str(e)
+        }
 
     with db_session() as session:
         session.add(ScanResult(
