@@ -11,25 +11,42 @@ This directory contains automated tests for the Netscan backend. It supports:
 ## Directory Structure
 
 ```md
-tests
-├── unit
-│   ├── __init__.py
-│   ├── test_api.py
-│   ├── test_auth.py
-│   ├── test_dns.py
-│   ├── test_scan.py
-│   ├── test_utils.py
-│   └── test_web.py
-├── ui
-│   ├── __init__.py
-│   └── test_user_flow.py
-├── load
-│   ├── scenarios
-│   │   └── auth.py
-│   ├── __init__.py
-│   └── locustfile.py
-├── conftest.py
-└── README.md
+tests/
+├─ load/
+│  ├─ scenarios/
+│  │  └─ auth.py
+│  ├─ __init__.py
+│  └─ locustfile.py
+├─ ui/
+│  ├─ __init__.py
+│  └─ test_user_flow.py
+├─ unit/
+│  ├─ api/
+│  │  └─ test_api.py
+│  ├─ auth/
+│  │  ├─ test_login.py
+│  │  ├─ test_me.py
+│  │  └─ test_register.py
+│  ├─ dns/
+│  │  ├─ test_lookup.py
+│  │  ├─ test_reverse.py
+│  │  └─ test_whois.py
+│  ├─ scan/
+│  │  ├─ test_banner.py
+│  │  ├─ test_os_fingerprint.py
+│  │  ├─ test_ping.py
+│  │  ├─ test_portscan.py
+│  │  └─ test_traceroute.py
+│  ├─ utils/
+│  │  ├─ test_headers.py
+│  │  ├─ test_latency.py
+│  │  └─ test_resolve.py
+│  ├─ web/
+│  │  ├─ test_httpcheck.py
+│  │  └─ test_sslcheck.py
+│  └─ __init__.py
+├─ conftest.py
+└─ README.md
 ```
 ---
 
@@ -64,6 +81,7 @@ pytest tests/unit -m "dns and scan" --api-url=https://api.netscan.io/api/v1
 ```
 
 All availible test markers are listed in pytest.ini in the root of project.
+
 ---
 
 ## Authentication
