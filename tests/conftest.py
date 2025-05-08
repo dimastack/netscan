@@ -4,15 +4,6 @@ import requests
 
 
 @pytest.fixture(scope="session")
-def api_base_url():
-    """
-    Returns the base URL for API requests.
-    You can override this with the BACKEND_URL environment variable.
-    """
-    return os.getenv("BACKEND_URL", "http://localhost:5001/api/v1")
-
-
-@pytest.fixture(scope="session")
 def test_user_credentials():
     """
     Returns static test user credentials.
@@ -60,3 +51,20 @@ def auth_headers(auth_token):
     return {
         "Authorization": f"Bearer {auth_token}"
     }
+
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--api-url",
+        action="store",
+        help="Base URL for the API"
+    )
+
+@pytest.fixture(scope="session")
+def api_base_url(request):
+    """
+    Returns the base URL for API requests.
+    You can override this with the BACKEND_URL environment variable.
+    """
+    api_url = request.config.getoption("--api-url")
+    return api_url if api_url else os.getenv("BACKEND_URL", "http://localhost:5001/api/v1")

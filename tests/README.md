@@ -53,13 +53,17 @@ By default, tests run against Flask running in Docker container and accessible b
 
 ```bash
 pytest tests/unit
+pytest -m "unit and not scan and not dns and not utils"
+pytest tests/unit/auth/test_login.py::test_login_with_invalid_credentials
 ```
 To run with a custom backend:
 
 ```bash
 pytest tests/unit --api-url=http://localhost:5001/api/v1
-pytest tests/unit/test_scan.py::test_ping --api-url=https://api.netscan.io/api/v1
+pytest tests/unit -m "dns and scan" --api-url=https://api.netscan.io/api/v1
 ```
+
+All availible test markers are listed in pytest.ini in the root of project.
 ---
 
 ## Authentication
