@@ -20,7 +20,11 @@ def register():
         JSON with a success message if the user is registered successfully.
         If the username or email is already in use, returns an error message.
     """
+    
     data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid or missing JSON payload"}), 400
+
     username = data.get("username")
     email = data.get("email")
     password = data.get("password")

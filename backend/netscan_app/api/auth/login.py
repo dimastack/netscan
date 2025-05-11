@@ -22,6 +22,9 @@ def login():
     """
 
     data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid or missing JSON payload"}), 400
+
     email = data.get("email")
     password = data.get("password")
 
@@ -34,4 +37,5 @@ def login():
             return jsonify({"error": "Invalid credentials"}), 401
 
         token = create_access_token(identity=str(user.id))
-        return jsonify({"access_token": token})
+        return jsonify({"access_token": token}), 200
+
