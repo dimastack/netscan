@@ -1,12 +1,82 @@
-# React + Vite
+# Netscan Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains the frontend application for Netscan, a network scanning and monitoring tool. Built with React and Vite, it offers a responsive and modern user interface.
 
-Currently, two official plugins are available:
+##  Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Prerequisites
 
-## Expanding the ESLint configuration
+Ensure you have the following installed:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Node.js** (v23.11.0 or later)
+- **npm** (v10.9.2 or later)
+
+---
+
+### Installation
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/dimastack/netscan.git
+cd netscan/frontend
+npm install
+```
+
+---
+
+## Development
+
+Start the development server:
+
+```bash
+npm run dev
+```
+Open your browser and navigate to http://localhost:5173 to view the application.
+
+**Features**:
+- **Authentication**: Login and Register forms with validation.
+- **Routing**: Protected routes using React Router.
+- **State Management**: Local state for form handling and error messages.
+- **Styling**: Global CSS with responsive design.
+
+---
+
+## Folder Structure
+
+```md
+frontend/
+├── app/
+│   ├── public/                # Static assets like images and icons
+│   ├── src/
+│   │   ├── api/               # API service modules
+│   │   ├── components/        # Reusable UI components
+│   │   ├── hooks/             # Custom React hooks
+│   │   ├── pages/             # Page components (Login, Register, Dashboard)
+│   │   ├── router/            # React Router setup
+│   │   ├── services/          # Client-side services
+│   │   ├── styles/            # Global and component-specific styles
+│   │   ├── utils/             # Utility functions
+│   │   ├── App.jsx            # Main application component
+│   │   └── main.jsx           # Entry point for React
+│   ├── .env                   # Environment variables
+│   ├── .gitignore             # Git ignore rules
+│   ├── eslint.config.js       # ESLint configuration
+│   ├── index.html             # Main HTML template
+│   ├── package.json           # Project metadata and dependencies
+│   └── vite.config.js         # Vite configuration
+└── Dockerfile                 # Docker configuration for deployment
+
+```
+
+---
+
+## Key Components
+- App.jsx: The root component that sets up routing and layout.
+- main.jsx: The entry point that renders the app into the DOM.
+- PrimaryButton.jsx: A reusable button component with consistent styling.
+- Loader.jsx: A loading spinner component displayed during asynchronous operations.
+- FormWrapper.jsx: A base form component used by both Login and Register pages.
+- Login.jsx & Register.jsx: Page components that utilize AuthForm.jsx for user authentication.
+
+---
