@@ -1,4 +1,5 @@
 import os
+
 from netscan_app import create_app
 from netscan_app.core.config import Config
 

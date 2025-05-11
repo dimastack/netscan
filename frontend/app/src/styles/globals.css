@@ -1,0 +1,250 @@
+/* =============================
+   GLOBAL RESETS & BASE STYLES
+============================= */
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #e0e7ff, #f8f9fa); /* soft violet/white */
+  color: #2c3e50;
+}
+
+/* =============================
+   TYPOGRAPHY & LINK STYLES
+============================= */
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+/* =============================
+   FORM CONTAINER & ELEMENTS
+============================= */
+form {
+  max-width: 420px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border: 1px solid #dcdfe6;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #c0c7d6;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #f9fafe;
+}
+
+input:focus {
+  border-color: #5c6ac4;
+  outline: none;
+  box-shadow: 0 0 5px rgba(92, 106, 196, 0.3);
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 6px;
+  text-align: left;
+}
+
+/* =============================
+   BUTTON STYLES
+============================= */
+.primary-button {
+  background-color: #747bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.primary-button:hover {
+  background-color: #5c6ac4;
+}
+
+.primary-button:disabled {
+  background-color: #aab0ff;
+  cursor: not-allowed;
+}
+
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #5c6ac4;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: inherit;
+}
+
+button:hover {
+  background-color: #4b5bbd;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* =============================
+   ERROR MESSAGE
+============================= */
+.error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* =============================
+   PAGE-SPECIFIC STYLES
+============================= */
+.login-form,
+.register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(to bottom right, #e3e8ff, #f8f9fa);
+}
+
+.login-form h2,
+.register-form h2 {
+  margin-bottom: 1rem;
+  color: #5c6ac4;
+}
+
+/* =============================
+   LOADER
+============================= */
+.loader {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #5c6ac4;
+}
+
+/* =============================
+   NOT FOUND PAGE
+============================= */
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to top, #eef1f8, #e3e8ff);
+  text-align: center;
+  padding: 20px;
+  color: #333;
+}
+
+.not-found-image {
+  max-width: 320px;
+  margin-bottom: 20px;
+}
+
+.not-found-heading {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #5c6ac4;
+}
+
+.not-found-text {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #6c757d;
+}
+
+.not-found-link {
+  font-size: 1rem;
+  color: #5c6ac4;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 2px solid #5c6ac4;
+  transition: all 0.3s ease;
+}
+
+.not-found-link:hover {
+  background-color: #5c6ac4;
+  color: #fff;
+  text-decoration: none;
+  border-color: #4b5bbd;
+}
+
+.not-found-link:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(92, 106, 196, 0.5);
+}
