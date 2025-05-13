@@ -22,6 +22,7 @@ const Login = () => {
 
     try {
       await loginUser({ email, password });
+      localStorage.setItem('userEmail', email);
       navigate('/dashboard');
     } catch (err) {
       setError(err.error || 'Something went wrong, please try again.');

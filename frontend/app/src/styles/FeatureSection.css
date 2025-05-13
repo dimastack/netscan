@@ -1,0 +1,76 @@
+.feature-section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.feature-section .dropdown-toggle {
+  padding: 1rem;
+  background-color: #747bff;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.feature-section .dropdown-toggle:hover {
+  background-color: #5c6ac4;
+}
+
+.feature-section .feature-content {
+  padding: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.feature-section .form-group {
+  margin-bottom: 1rem;
+}
+
+.feature-section .form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.feature-section .form-group input,
+.feature-section .form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.feature-section .execute-btn {
+  margin-top: 0.5rem;
+  background-color: #5c6ac4;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.feature-section .execute-btn:hover {
+  background-color: #4b5bbd;
+}
+
+.feature-section .api-result {
+  margin-top: 1rem;
+  background: #f9fafe;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  color: #2c3e50;
+}
