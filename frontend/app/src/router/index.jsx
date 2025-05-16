@@ -4,12 +4,12 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Dashboard from '../pages/Dashboard';
 import NotFound from '../pages/NotFound';
-import { useAuth } from '../hooks/useAuth';
+import { useAuthContext } from '../context/AuthContext';
 import Loader from '../components/Loader';
 
 // Root Redirect Handler
 const RootRedirect = () => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuthContext();
 
   if (loading) {
     return <Loader />;
@@ -20,7 +20,7 @@ const RootRedirect = () => {
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ element }) => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuthContext();
 
   if (loading) {
     return <Loader />;

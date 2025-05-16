@@ -1,0 +1,45 @@
+.top-bar {
+  height: 60px;
+  background-color: #5c6ac4;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.top-bar .left-section,
+.top-bar .right-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.top-bar .menu-toggle-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.top-bar .menu-toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+.top-bar .section-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.top-bar .user-email {
+  font-weight: 500;
+  color: white;
+}

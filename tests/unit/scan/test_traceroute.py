@@ -6,7 +6,7 @@ import requests
 @pytest.mark.scan
 def test_trace(api_base_url, auth_headers):
     """Test traceroute functionality."""
-    url = f"{api_base_url}/scan/trace"
+    url = f"{api_base_url}/scan/traceroute"
     response = requests.get(url, headers=auth_headers, params={"ip": "8.8.8.8"})
     assert response.status_code == 200
     data = response.json()

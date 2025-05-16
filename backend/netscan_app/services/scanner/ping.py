@@ -6,7 +6,7 @@ import subprocess
 from scapy.all import IP, ICMP, sr1
 
 
-def ping_host(ip):
+def ping_host(ip, timeout=3):
     """
     Ping a host using Scapy (Linux based env); fallback to system ping if Scapy fails (any OS).
 
@@ -25,7 +25,7 @@ def ping_host(ip):
     try:
         start = time.time()
         pkt = IP(dst=ip) / ICMP()
-        reply = sr1(pkt, timeout=2, verbose=0)
+        reply = sr1(pkt, timeout=timeout, verbose=0)
         end = time.time()
 
         if reply:
@@ -53,10 +53,10 @@ def ping_host(ip):
             "error": str(e)
         }
 
-    return fallback_ping(ip)
+    return fallback_ping(ip, timeout)
 
 
-def fallback_ping(ip):
+def fallback_ping(ip, timeout=3):
     """
     Fallback ping using system command. Works on all platforms if ICMP is blocked.
 
@@ -77,7 +77,7 @@ def fallback_ping(ip):
             raise RuntimeError(f"Unsupported platform: {sys.platform}")
 
         start = time.time()
-        result = subprocess.run(args, capture_output=True, text=True, timeout=3)
+        result = subprocess.run(args, capture_output=True, text=True, timeout=timeout)
         end = time.time()
         output = result.stdout.strip()
         error_output = result.stderr.strip()

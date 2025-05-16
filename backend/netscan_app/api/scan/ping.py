@@ -15,6 +15,7 @@ def ping():
 
     Query Parameters:
         ip (str): IP address of the host to ping.
+        timeout (int): Timeout for the connection in seconds. Default is 3 seconds.
 
     Returns:
         JSON with ICMP ping result.
@@ -22,10 +23,11 @@ def ping():
 
     user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
+    timeout = float(request.args.get("timeout", default="3"))
     if not ip:
         return jsonify({"error": "Missing 'ip'"}), 400
 
-    result = ping_host(ip)
+    result = ping_host(ip, timeout)
 
     with db_session() as session:
         result_data = ScanResult(

@@ -7,7 +7,7 @@ from netscan_app.services.scanner import traceroute_host
 
 traceroute_bp = Blueprint("trace", __name__)
 
-@traceroute_bp.route("/trace")
+@traceroute_bp.route("/traceroute")
 @jwt_required()
 def trace():
     """
