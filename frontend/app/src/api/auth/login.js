@@ -1,22 +1,30 @@
 import api from '../../services/client';
 
 /**
- * Sends login credentials and receives a JWT token.
+ * Sends login credentials to the backend and stores the received tokens.
  * 
- * @param {Object} credentials - { email, password }
- * @returns {Promise<Object>} response data or error
+ * On successful authentication, both access and refresh tokens are stored in localStorage.
+ *
+ * @param {Object} credentials - The login form input: { email, password }
+ * @returns {Promise<Object>} The response data including access and refresh tokens.
+ * @throws {Object} Error data if login fails.
  */
 export async function loginUser(credentials) {
   try {
     const response = await api.post('/auth/login', credentials);
 
-    // Save token for later use
-    if (response.data.access_token) {
-      localStorage.setItem('accessToken', response.data.access_token);
+    const { access_token, refresh_token } = response.data;
+
+    if (!access_token || !refresh_token) {
+      throw new Error('Tokens missing in response');
     }
+
+    localStorage.setItem('accessToken', access_token);
+    localStorage.setItem('refreshToken', refresh_token);
 
     return response.data;
   } catch (error) {
-    throw error.response?.data || { error: 'Login failed' };
+    console.error('Login error in loginUser:', error);
+    throw error?.response?.data || { error: 'Login failed' };
   }
 }

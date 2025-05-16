@@ -12,12 +12,21 @@
   color: white;
   font-weight: 600;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center; /* Center horizontally */
+  align-items: center;     /* Center vertically */
   cursor: pointer;
   border: none;
   width: 100%;
   text-align: left;
+}
+
+.feature-section .dropdown-toggle .label {
+  flex-grow: 1; /* Makes sure label is taking available space */
+  text-align: center; /* Centers the label text horizontally */
+}
+
+.feature-section .dropdown-toggle .arrow {
+  margin-left: 1rem; /* Adds space between the label and the arrow */
 }
 
 .feature-section .dropdown-toggle:hover {

@@ -17,6 +17,7 @@ def bannergrab():
     Query Parameters:
         ip (str): IP address of the target host.
         port (int): Port number to connect to.
+        timeout (int): Timeout for the connection in seconds. Default is 2 seconds.
 
     Returns:
         JSON with banner string or error details.
@@ -25,10 +26,11 @@ def bannergrab():
     user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     port = request.args.get("port", type=int)
+    timeout = float(request.args.get("timeout", default="2"))
     if not ip or port is None:
         return jsonify({"error": "Missing 'ip' or 'port'"}), 400
 
-    result = banner_grab(ip, port)
+    result = banner_grab(ip, port, timeout=timeout)
 
     with db_session() as session:
         result_data = ScanResult(

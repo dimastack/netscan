@@ -14,7 +14,8 @@ const FeatureSection = ({ label, inputs, apiCall }) => {
   return (
     <div className="feature-section">
       <button className="dropdown-toggle" onClick={() => setOpen(!open)}>
-        {label} {open ? '▲' : '▼'}
+        <span className="label">{label}</span>
+        <span className="arrow">{open ? '▲' : '▼'}</span>
       </button>
       {open && (
         <div className="feature-content">

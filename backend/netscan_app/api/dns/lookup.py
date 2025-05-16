@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from scapy.all import IP, UDP, DNS, DNSQR, sr1
+import dns.resolver
 
 from netscan_app.core.db import db_session
 from netscan_app.models.scan_results import ScanResult
@@ -23,7 +24,6 @@ def lookup():
         JSON with the DNS response answers or an error message.
     """
 
-    # Get user_id from JWT token
     user_id = int(get_jwt_identity())
 
     domain = request.args.get("domain")
@@ -37,11 +37,12 @@ def lookup():
     if record_type not in supported_types:
         return jsonify({"error": f"Unsupported record type '{record_type}'"}), 400
 
+    results = []
+
     try:
         pkt = IP(dst=dst) / UDP(dport=53) / DNS(rd=1, qd=DNSQR(qname=domain, qtype=record_type))
         resp = sr1(pkt, verbose=0, timeout=timeout)
 
-        results = []
         if resp and resp.haslayer(DNS):
             for i in range(resp[DNS].ancount):
                 r = resp[DNS].an[i]
@@ -50,21 +51,40 @@ def lookup():
                     results.append(data)
                 except Exception:
                     results.append(str(r.rdata))
+    except Exception:
+        pass
 
-        with db_session() as session:
-            result = ScanResult(
-                user_id=user_id,
-                scan_type="dns_lookup",
-                target=domain,
-                result=str(results)
-            )
-            session.add(result)
+    if not results:
+        try:
+            resolver = dns.resolver.Resolver()
+            resolver.nameservers = [dst]
+            answer = resolver.resolve(domain, record_type, lifetime=timeout)
+            results = [str(r) for r in answer]
+        except Exception as e:
+            if "The DNS response does not contain an answer to the question" in str(e):
+                return jsonify({
+                    "domain": domain,
+                    "type": record_type,
+                    "answers": [f"{str(e)}"]
+                }), 200
+            else:
+                return jsonify({
+                    "domain": domain,
+                    "type": record_type,
+                    "error": f"DNS query error: {str(e)}"
+                }), 500
 
-        return jsonify({
-            "domain": domain,
-            "type": record_type,
-            "answers": results
-        })
+    with db_session() as session:
+        result = ScanResult(
+            user_id=user_id,
+            scan_type="dns_lookup",
+            target=domain,
+            result=str(results)
+        )
+        session.add(result)
 
-    except Exception as e:
-        return jsonify({"domain": domain, "type": record_type, "error": str(e)}), 500
+    return jsonify({
+        "domain": domain,
+        "type": record_type,
+        "answers": results
+    })

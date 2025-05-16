@@ -1,36 +1,42 @@
-// src/hooks/useAuth.js
 import { useState, useEffect } from 'react';
 import { validateToken } from '../api/auth/validateToken';
+import { refreshToken } from '../api/auth/refreshToken';
 
-const useAuth = () => {
+export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // To manage loading state
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const checkToken = async () => {
-      const token = localStorage.getItem('accessToken');
-      if (token) {
+  const checkToken = async () => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      try {
+        const isValid = await validateToken();
+        setIsAuthenticated(isValid);
+      } catch (error) {
         try {
-          // Validate token with the backend
+          await refreshToken();
           const isValid = await validateToken();
           setIsAuthenticated(isValid);
-        } catch (error) {
-          // If token is invalid, set to false
+        } catch (refreshError) {
           setIsAuthenticated(false);
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
         }
-      } else {
-        // No token means not authenticated
-        setIsAuthenticated(false);  
       }
-      // Set loading to false once the check is done
-      setLoading(false);
-    };
+    } else {
+      setIsAuthenticated(false);
+    }
+    setLoading(false);
+  };
 
+  useEffect(() => {
     checkToken();
   }, []);
 
-  return { isAuthenticated, loading };
-};
+  const login = async () => {
+    setLoading(true);
+    await checkToken();
+  };
 
-export { useAuth };
+  return { isAuthenticated, loading, login };
+};

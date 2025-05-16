@@ -1,8 +1,8 @@
 import api from '../../services/client';
 
-export const getLatency = async (url) => {
+export const getLatency = async ({ host, port = 80 }) => {
   const response = await api.get('/utils/latency', {
-    params: { url },
+    params: { host, port },
   });
   return response.data;
 };

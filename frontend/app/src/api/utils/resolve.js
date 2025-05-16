@@ -1,8 +1,8 @@
 import api from '../../services/client';
 
-export const resolveDomain = async (domain) => {
+export const resolveDomain = async ({ host }) => {
   const response = await api.get('/utils/resolve', {
-    params: { domain },
+    params: { host },
   });
   return response.data;
 };
