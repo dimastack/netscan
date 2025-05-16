@@ -1,4 +1,6 @@
 import os
+
+from datetime import timedelta
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -8,9 +10,12 @@ load_dotenv(dotenv_path=env_path)
 
 class Config:
     FLASK_ENV = os.getenv("FLASK_ENV", "development")
+    FLASK_DEBUG = os.getenv("FLASK_DEBUG", "false").lower() == "true"
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-insecure-key")
     JWT_SECRET = os.getenv("JWT_SECRET", "dev-insecure-jwt-key")
-    FLASK_DEBUG = os.getenv("FLASK_DEBUG", "false").lower() == "true"
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES_MINUTES", 60)))
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=int(os.getenv("JWT_REFRESH_TOKEN_EXPIRES_DAYS", 7)))
+    
 
     DB_USER = os.getenv("DB_USER", "postgres")
     DB_PASSWORD = os.getenv("DB_PASSWORD", "postgres")

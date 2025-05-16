@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../api/auth/login';
+import { useAuthContext } from '../context/AuthContext';
 import FormInput from '../components/FormInput';
 import FormWrapper from '../components/FormWrapper';
 import PrimaryButton from '../components/PrimaryButton';
@@ -8,6 +9,8 @@ import "../styles/globals.css";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuthContext();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -22,6 +25,9 @@ const Login = () => {
 
     try {
       await loginUser({ email, password });
+      localStorage.setItem('userEmail', email);
+
+      login();
       navigate('/dashboard');
     } catch (err) {
       setError(err.error || 'Something went wrong, please try again.');

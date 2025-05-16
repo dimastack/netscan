@@ -1,6 +1,6 @@
 import api from '../../services/client';
 
-export const tracerouteHost = async (ip) => {
+export const tracerouteHost = async ({ ip }) => {
   const response = await api.get('/scan/traceroute', {
     params: { ip },
   });

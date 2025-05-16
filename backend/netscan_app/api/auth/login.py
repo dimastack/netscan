@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, create_refresh_token
 from werkzeug.security import check_password_hash
 
 from netscan_app.core.db import db_session
@@ -36,6 +36,7 @@ def login():
         if not user or not check_password_hash(user.password_hash, password):
             return jsonify({"error": "Invalid credentials"}), 401
 
-        token = create_access_token(identity=str(user.id))
-        return jsonify({"access_token": token}), 200
+        access_token = create_access_token(identity=str(user.id))
+        refresh_token = create_refresh_token(identity=str(user.id))
+        return jsonify({"access_token": access_token, "refresh_token": refresh_token}), 200
 

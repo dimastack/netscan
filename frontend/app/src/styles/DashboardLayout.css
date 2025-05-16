@@ -1,0 +1,41 @@
+.dashboard-layout {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  min-height: 100vh;
+  background: linear-gradient(to right, #e0e7ff, #f8f9fa);
+  margin-top: 60px;
+  gap: 1rem;
+}
+
+.top-bar {
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.dashboard-body {
+  display: flex;
+  flex-grow: 1;
+  height: calc(100vh - 60px);
+  width: 100%;
+  overflow: hidden;
+  margin-top: 60px;
+  gap: 1rem;
+}
+
+.sidebar {
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.dashboard-content {
+  flex-grow: 1;
+  margin-left: 220px;
+  padding: 1rem;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar.collapsed ~ .dashboard-content {
+  margin-left: 60px;
+}

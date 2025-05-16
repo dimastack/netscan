@@ -27,9 +27,9 @@ def synscan():
     user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     ports = request.args.get("ports", "22,80,443")
-    port_list = [int(p.strip()) for p in ports.split(",") if p.strip().isdigit()]
+    ports_list = [int(p.strip()) for p in ports.split(",") if p.strip().isdigit()]
 
-    result = syn_scan(ip, port_list)
+    result = syn_scan(ip, ports_list)
 
     with db_session() as session:
         result_data = ScanResult(
@@ -52,6 +52,7 @@ def tcp_connect():
     Query Parameters:
         ip (str): IP address of the target host.
         port (int): Port number to test.
+        timeout (int): Timeout for the connection in seconds. Default is 2 seconds.
 
     Returns:
         JSON with connection status and response time (RTT).
@@ -60,6 +61,7 @@ def tcp_connect():
     user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
     port = request.args.get("port", type=int)
+    timeout = float(request.args.get("timeout", default="2"))
 
     if not ip or port is None:
         return jsonify({"error": "Missing 'ip' or 'port'"}), 400
@@ -67,7 +69,7 @@ def tcp_connect():
     try:
         start = time.time()
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(2)
+        sock.settimeout(timeout)
         sock.connect((ip, port))
         sock.close()
         end = time.time()
@@ -108,7 +110,7 @@ def udp():
 
     Query Parameters:
         ip (str): IP address of the target host.
-        port (int): Port number to test.
+        ports (str): Comma-separated list of ports (e.g., 22,80,443).
 
     Returns:
         JSON with scan result for the given UDP port.
@@ -116,17 +118,19 @@ def udp():
 
     user_id = int(get_jwt_identity())
     ip = request.args.get("ip")
-    port = request.args.get("port", type=int)
-    if not ip or port is None:
-        return jsonify({"error": "Missing 'ip' or 'port'"}), 400
+    ports = request.args.get("ports", "22,80,443")
+    ports_list = [int(p.strip()) for p in ports.split(",") if p.strip().isdigit()]
+    if not ip:
+        return jsonify({"error": "Missing 'ip'"}), 400
 
-    result = udp_scan(ip, [port])
+    result = udp_scan(ip, ports_list)
 
     with db_session() as session:
         result_data = ScanResult(
             user_id=user_id,
             scan_type="udp",
-            target=f"{ip}:{port}",
+            target=ip,
+            ports=ports,
             result=str(result)
         )
         session.add(result_data)
