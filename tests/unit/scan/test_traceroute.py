@@ -1,13 +1,17 @@
 import pytest
 import requests
 
+from conftest import API_TEST_URL
+
+SCAN_TRACE_URL = f"{API_TEST_URL}/scan/traceroute"
 
 @pytest.mark.unit
 @pytest.mark.scan
-def test_trace(api_base_url, auth_headers):
+def test_trace(auth_headers):
     """Test traceroute functionality."""
-    url = f"{api_base_url}/scan/traceroute"
-    response = requests.get(url, headers=auth_headers, params={"ip": "8.8.8.8"})
+    response = requests.get(SCAN_TRACE_URL, 
+                            headers=auth_headers, 
+                            params={"ip": "8.8.8.8"})
     assert response.status_code == 200
     data = response.json()
     assert data['error'] == None

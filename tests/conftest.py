@@ -1,47 +1,57 @@
-import os
 import pytest
 import requests
 
-
-@pytest.fixture(scope="session")
-def test_user_credentials():
-    """
-    Returns static test user credentials.
-    Update as needed.
-    """
-    return {
-        "username": "testuser",
-        "email": "testuser@example.com",
-        "password": "testpassword123"
-    }
+from config import add_options, get_options
 
 
-@pytest.fixture(scope="session")
-def auth_token(api_base_url, test_user_credentials):
+API_TEST_URL = None
+API_USER_CREDENTIALS = {
+    "username": "testuser",
+    "email": "testuser@example.com",
+    "password": "testpassword123"
+}
+
+UI_TEST_URL = None
+BROWSER = None
+UI_USER_CREDENTIALS = {
+    "username": "uitest",
+    "email": "uitest@example.com",
+    "password": "testpassword123"
+}
+
+def pytest_addoption(parser):
+    add_options(parser)
+
+def pytest_configure(config):
+    global API_TEST_URL, UI_TEST_URL, BROWSER
+    opts = get_options(config)
+    API_TEST_URL = opts["API_TEST_URL"]
+    UI_TEST_URL = opts["UI_TEST_URL"]
+    BROWSER = opts["BROWSER"]
+
+@pytest.fixture(scope="session", autouse=True)
+def auth_token():
     """
     Registers the user (if not exists), logs in, and returns a JWT token.
     """
-    # Try register
     try:
         requests.post(
-            f"{api_base_url}/auth/register",
-            json=test_user_credentials,
+            f"{API_TEST_URL}/auth/register",
+            json=API_USER_CREDENTIALS,
             timeout=5
         )
     except requests.exceptions.RequestException:
-        pass  # User might already exist, ignore
+        pass  # Ignore if already exists
 
-    # Login
     response = requests.post(
-        f"{api_base_url}/auth/login",
+        f"{API_TEST_URL}/auth/login",
         json={
-            "email": test_user_credentials["email"],
-            "password": test_user_credentials["password"]
+            "email": API_USER_CREDENTIALS["email"],
+            "password": API_USER_CREDENTIALS["password"]
         }
     )
     response.raise_for_status()
     return response.json()["access_token"]
-
 
 @pytest.fixture
 def auth_headers(auth_token):
@@ -51,20 +61,3 @@ def auth_headers(auth_token):
     return {
         "Authorization": f"Bearer {auth_token}"
     }
-
-
-def pytest_addoption(parser):
-    parser.addoption(
-        "--api-url",
-        action="store",
-        help="Base URL for the API"
-    )
-
-@pytest.fixture(scope="session")
-def api_base_url(request):
-    """
-    Returns the base URL for API requests.
-    You can override this with the BACKEND_URL environment variable.
-    """
-    api_url = request.config.getoption("--api-url")
-    return api_url if api_url else os.getenv("BACKEND_URL", "http://localhost:5001/api/v1")

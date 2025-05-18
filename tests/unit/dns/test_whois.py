@@ -1,14 +1,16 @@
 import pytest
 import requests
 
+from conftest import API_TEST_URL
+
+DNS_WHOIS_URL = f"{API_TEST_URL}/dns/whois"
 
 @pytest.mark.unit
 @pytest.mark.dns
-def test_whois_lookup_valid(api_base_url, auth_headers):
+def test_whois_lookup_valid(auth_headers):
     """Test WHOIS lookup for a valid domain."""
     params = {"domain": "example.com"}
-    url = f"{api_base_url}/dns/whois"
-    response = requests.get(url, headers=auth_headers, params=params)
+    response = requests.get(DNS_WHOIS_URL, headers=auth_headers, params=params)
     assert response.status_code == 200
     json_data = response.json()
     assert json_data["domain"] == "example.com"
@@ -17,9 +19,8 @@ def test_whois_lookup_valid(api_base_url, auth_headers):
 
 @pytest.mark.unit
 @pytest.mark.dns
-def test_whois_lookup_missing_domain(api_base_url, auth_headers):
+def test_whois_lookup_missing_domain(auth_headers):
     """Test WHOIS lookup error response when domain is missing."""
-    url = f"{api_base_url}/dns/whois"
-    response = requests.get(url, headers=auth_headers)
+    response = requests.get(DNS_WHOIS_URL, headers=auth_headers)
     assert response.status_code == 400
     assert "error" in response.json()
