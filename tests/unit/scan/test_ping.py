@@ -1,14 +1,16 @@
 import pytest
 import requests
 
+from conftest import API_TEST_URL
+
+SCAN_PING_URL = f"{API_TEST_URL}/scan/ping"
 
 @pytest.mark.unit
 @pytest.mark.scan
-def test_ping(api_base_url, auth_headers):
+def test_ping(auth_headers):
     """Test ping route with valid IP."""
-    url = f"{api_base_url}/scan/ping"
     ip = "8.8.8.8"
-    response = requests.get(url, headers=auth_headers, params={"ip": ip})
+    response = requests.get(SCAN_PING_URL, headers=auth_headers, params={"ip": ip})
     assert response.status_code == 200
     data = response.json()
     assert data['error'] == None
@@ -21,10 +23,9 @@ def test_ping(api_base_url, auth_headers):
 
 @pytest.mark.unit
 @pytest.mark.scan
-def test_ping_invalid_ip(api_base_url, auth_headers):   
+def test_ping_invalid_ip(auth_headers):   
     """Test ping route with invalid IP."""
-    url = f"{api_base_url}/scan/ping"
-    response = requests.get(url, headers=auth_headers, params={"ip": "8.8."})
+    response = requests.get(SCAN_PING_URL, headers=auth_headers, params={"ip": "8.8."})
     assert response.status_code == 200
     data = response.json()
     assert data['status'] == "error"
@@ -33,8 +34,7 @@ def test_ping_invalid_ip(api_base_url, auth_headers):
 
 @pytest.mark.unit
 @pytest.mark.scan
-def test_ping_missing_ip(api_base_url, auth_headers):
+def test_ping_missing_ip(auth_headers):
     """Test ping route with missing IP."""
-    url = f"{api_base_url}/scan/ping"
-    response = requests.get(url, headers=auth_headers)
+    response = requests.get(SCAN_PING_URL, headers=auth_headers)
     assert response.status_code == 400
