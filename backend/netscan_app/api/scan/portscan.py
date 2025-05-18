@@ -129,8 +129,7 @@ def udp():
         result_data = ScanResult(
             user_id=user_id,
             scan_type="udp",
-            target=ip,
-            ports=ports,
+            target=f"{ip}:{ports}",
             result=str(result)
         )
         session.add(result_data)
