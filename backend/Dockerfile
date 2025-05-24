@@ -23,7 +23,9 @@ ENV FLASK_APP=netscan_app/main.py
 ENV FLASK_ENV=development
 
 # Expose the port that the Flask app will run on
-EXPOSE 5000
+EXPOSE 5001
 
 # Run the application
-CMD ["python", "-m", "netscan_app.main"]
+# CMD ["python", "-m", "netscan_app.main"]
+CMD ["gunicorn", "-b", "0.0.0.0:5001", "netscan_app.main:app", "--workers=4", "--threads=2"]
+
