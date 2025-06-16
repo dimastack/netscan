@@ -4,7 +4,8 @@ def get_options(config):
     return {
         "API_TEST_URL": config.getoption("--api-url"),
         "UI_TEST_URL": config.getoption("--ui-url"),
-        "BROWSER": config.getoption("--browser").lower()
+        "BROWSER": config.getoption("--browser").lower(),
+        "HEADLESS": config.getoption("--headless"),
     }
 
 def add_options(parser):
@@ -25,4 +26,10 @@ def add_options(parser):
         action="store",
         default=os.getenv("BROWSER", "chromium"),
         help="Browser to use: chromium, firefox, or webkit"
+    )
+    parser.addoption(
+        "--headless",
+        action="store_true",
+        default=False,
+        help="Run browser in headless mode"
     )

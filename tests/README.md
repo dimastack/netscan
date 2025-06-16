@@ -136,6 +136,7 @@ pytest tests/ui
 pytest -m "ui"
 pytest tests/ui/e2e/test_dashbord_general.py::test_dashboard
 ```
+
 To run with a custom backend:
 
 ```bash
@@ -143,4 +144,8 @@ pytest tests/ui --ui-url=http://localhost:5001/api/v1
 pytest -m ui --ui-url=https://netscan.io/
 ```
 
+To run on CI in headless mode:
+```bash
+pytest tests/ui --headless
+```
 ---

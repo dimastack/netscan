@@ -23,9 +23,9 @@ services:
     cap_add:
       - NET_RAW
       - NET_ADMIN
-    # On OSX 5000 port is busy by default by ControlCenter.app, so I use 5001 for port forwarding
+    # On OSX 5000 port is busy by default by ControlCenter.app, so I use 5001 for port forwarding host:container
     ports:
-      - "5001:5000"
+      - "5001:5001"
     depends_on:
       - db
     volumes:

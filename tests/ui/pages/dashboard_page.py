@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 from ui.pages.base_page import BasePage
 
 
@@ -76,6 +76,7 @@ class DashboardPage(BasePage):
 
     # --- Assertions / Checks ---
     def get_logged_in_email(self) -> str:
+        expect(self.page.locator(self.user_email)).to_be_visible()
         return self.get_text(self.user_email)
 
     def is_user_email_visible(self) -> bool:

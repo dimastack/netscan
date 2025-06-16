@@ -4,6 +4,7 @@ from faker import Faker
 from conftest import UI_TEST_URL
 from ui.pages.login_page import LoginPage
 from ui.pages.register_page import RegisterPage
+from ui.pages.dashboard_page import DashboardPage
 
 
 @pytest.mark.ui
@@ -25,5 +26,7 @@ def test_user_successfully_registered(page):
     assert login_page.get_text(login_page.form_header) == 'Login'
 
     login_page.login(email, password)
-    login_page.wait_for_url("/dashboard")
-    assert login_page.get_text("span.user-email") == email
+
+    dashboard_page = DashboardPage(page, UI_TEST_URL)
+    dashboard_page.wait_for_url("/dashboard")
+    assert dashboard_page.get_logged_in_email() == email
