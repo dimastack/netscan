@@ -47,7 +47,7 @@ services:
 
   web:
     build:
-      context: ./frontend
+      context: ./frontend/app
       dockerfile: Dockerfile
     container_name: frontend
     ports:

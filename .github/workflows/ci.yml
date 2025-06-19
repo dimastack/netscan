@@ -49,6 +49,9 @@ jobs:
       - name: Set up Docker Compose plugin
         uses: docker/setup-docker-action@v2
 
+      - name: Debug Docker context (optional)
+        run: ls -la frontend/app
+
       - name: Start Docker Compose
         run: docker compose up -d --build
 
