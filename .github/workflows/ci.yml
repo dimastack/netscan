@@ -86,8 +86,7 @@ jobs:
         run: docker exec backend alembic upgrade head
 
       - name: Run API tests
-        run: docker exec backend pytest tests/unit --maxfail=5 --disable-warnings
+        run: pytest tests/unit --maxfail=5 --disable-warnings
 
       - name: Run UI tests (Playwright)
-        run: |
-          pytest -m ui --headless
+        run: pytest -m ui --headless
