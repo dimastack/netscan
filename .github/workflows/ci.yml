@@ -34,13 +34,15 @@ jobs:
           cat <<EOF > .env
           FLASK_ENV=production
           FLASK_DEBUG=0
-          JWT_SECRET=${{ secrets.JWT_SECRET }}
           SECRET_KEY=${{ secrets.SECRET_KEY }}
           DB_USER=${{ secrets.DB_USER }}
           DB_PASSWORD=${{ secrets.DB_PASSWORD }}
           DB_NAME=${{ secrets.DB_NAME }}
           DB_HOST=db
           DB_PORT=${{ secrets.DB_PORT }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          JWT_ACCESS_TOKEN_EXPIRES_MINUTES=60
+          JWT_REFRESH_TOKEN_EXPIRES_DAYS=7
           EOF
 
       - name: Set up Docker Buildx
@@ -54,6 +56,9 @@ jobs:
 
       - name: Start Docker Compose
         run: docker compose up -d --build
+
+      - name: Show backend and db logs
+        run: docker compose logs --no-color backend db
 
       - name: Wait for Postgres to be ready
         run: |
