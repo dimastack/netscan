@@ -90,5 +90,5 @@ jobs:
         continue-on-error: true
 
       - name: Run UI tests (Playwright)
-        run: pytest -m ui --headless
+        run: pytest -m ui --headless --ui-url=http://localhost
         continue-on-error: true
