@@ -1,5 +1,5 @@
 # Step 1: Build the React application
-FROM node:16 AS build
+FROM node:23 AS build
 
 # Set the working directory in the container
 WORKDIR /app
@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the built app from the previous stage to the Nginx html directory
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # Expose port 80 (the default port for Nginx)
 EXPOSE 80

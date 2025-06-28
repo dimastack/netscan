@@ -129,18 +129,25 @@ All availible test markers are listed in pytest.ini in the root of project.
 
 ## Running Playwright Tests
 
-By default, Playwright tests run against the React frontend served from a Docker container and accessible at http://localhost:5173. You can override this URL using the --ui-url CLI flag.
+By default, Playwright tests run against the React frontend served by Nginx on port 80 in a Docker container http://localhost on CI and accessible at http://localhost:5173 if we will run frontend on dev
+server bypassing Docker. You can override this URL using the --ui-url CLI flag.
 
 ```bash
 pytest tests/ui
 pytest -m "ui"
 pytest tests/ui/e2e/test_dashbord_general.py::test_dashboard
 ```
-To run with a custom backend:
+
+To run with a custom frontend:
 
 ```bash
-pytest tests/ui --ui-url=http://localhost:5001/api/v1
+pytest tests/ui/e2e/test_dashbord_general.py::test_dashboard --ui-url=http://localhost:5173
+pytest tests/ui --ui-url=http://localhost
 pytest -m ui --ui-url=https://netscan.io/
 ```
 
+To run on CI in headless mode:
+```bash
+pytest tests/ui --headless
+```
 ---

@@ -12,22 +12,25 @@ API_USER_CREDENTIALS = {
 }
 
 UI_TEST_URL = None
-BROWSER = None
 UI_USER_CREDENTIALS = {
     "username": "uitest",
     "email": "uitest@example.com",
     "password": "testpassword123"
 }
 
+BROWSER = None
+HEADLESS = None
+
 def pytest_addoption(parser):
     add_options(parser)
 
 def pytest_configure(config):
-    global API_TEST_URL, UI_TEST_URL, BROWSER
+    global API_TEST_URL, UI_TEST_URL, BROWSER, HEADLESS
     opts = get_options(config)
     API_TEST_URL = opts["API_TEST_URL"]
     UI_TEST_URL = opts["UI_TEST_URL"]
     BROWSER = opts["BROWSER"]
+    HEADLESS = opts["HEADLESS"]
 
 @pytest.fixture(scope="session", autouse=True)
 def auth_token():

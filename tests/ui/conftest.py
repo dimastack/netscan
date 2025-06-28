@@ -4,7 +4,7 @@ import requests
 from playwright.sync_api import sync_playwright
 
 from config import get_options
-from conftest import UI_USER_CREDENTIALS
+from conftest import UI_USER_CREDENTIALS, HEADLESS
 
 @pytest.fixture(scope="session")
 def browser_context(request):
@@ -21,7 +21,7 @@ def browser_context(request):
         if not browser:
             raise ValueError(f"Unsupported browser: {browser_name}")
 
-        instance = browser.launch(headless=False)
+        instance = browser.launch(headless=HEADLESS)
         context = instance.new_context()
         yield context
         context.close()
